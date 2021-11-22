@@ -2,8 +2,6 @@ import React from 'react'
 import styled from 'styled-components'
 import { useTable } from 'react-table'
 
-import { mockData } from '../mockData'
-
 const Styles = styled.div`
   padding: 1rem;
 
@@ -69,32 +67,13 @@ function Table({ columns, data }) {
   )
 }
 
-const COL_CONFIG = [
-  {
-    Header: 'First Name',
-    accessor: 'firstName',
-  },
-  {
-    Header: 'Last Name',
-    accessor: 'lastName',
-  },
-  {
-    Header: 'Email',
-    accessor: 'email',
-  },
-  {
-    Header: 'Favorite Animal',
-    accessor: 'favoriteAnimal',
-  },
-]
-
-const DataTable = () => {
-  const columns = React.useMemo(() => COL_CONFIG, [])
-  const data = React.useMemo(() => mockData, [])
+const DataTable = ({ colConfig, data }) => {
+  const memoizedColumns = React.useMemo(() => colConfig, [colConfig])
+  const memoizedData = React.useMemo(() => data, [data])
 
   return (
     <Styles>
-      <Table columns={columns} data={data} />
+      <Table columns={memoizedColumns} data={memoizedData} />
     </Styles>
   )
 }
