@@ -1,24 +1,33 @@
 import './App.css'
 import DataTable from './components/DataTable'
-import FirstNameHeader from './FirstNameHeader'
 import { mockData } from './mockData'
 
 const COL_CONFIG = [
   {
-    Header: FirstNameHeader,
-    accessor: 'firstName',
+    Header: 'Name',
+    columns: [
+      {
+        Header: 'First Name',
+        accessor: 'firstName',
+      },
+      {
+        Header: 'Last Name',
+        accessor: 'lastName',
+      },
+    ],
   },
   {
-    Header: 'Last Name',
-    accessor: 'lastName',
-  },
-  {
-    Header: 'Email',
-    accessor: 'email',
-  },
-  {
-    Header: 'Favorite Animal',
-    accessor: 'favoriteAnimal',
+    Header: 'Info',
+    columns: [
+      {
+        Header: 'Email',
+        accessor: 'email',
+      },
+      {
+        Header: 'Favorite Animal',
+        accessor: 'favoriteAnimal',
+      },
+    ],
   },
 ]
 
