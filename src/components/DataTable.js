@@ -94,10 +94,12 @@ const DataTable = ({
         </tbody>
       </table>
 
-      <Pagination
-        tableInstance={tableInstance}
-        paginationConfig={paginationConfig}
-      />
+      {isPaginated ? (
+        <Pagination
+          tableInstance={tableInstance}
+          paginationConfig={paginationConfig}
+        />
+      ) : null}
     </Styles>
   )
 }

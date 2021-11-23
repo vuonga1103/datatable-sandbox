@@ -26,7 +26,7 @@ const PAGINATION_CONFIG = {
   pageSize: 20,
   hasJumpToPage: true,
   hasRowsPerPage: true,
-  wrapperStyle: {},
+  wrapperStyle: { marginTop: 24 },
 }
 
 function App() {
