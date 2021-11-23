@@ -23,7 +23,7 @@ const COL_CONFIG = [
 ]
 
 function App() {
-  return <DataTable colConfig={COL_CONFIG} data={mockData} />
+  return <DataTable colConfig={COL_CONFIG} data={mockData} isPaginated />
 }
 
 export default App

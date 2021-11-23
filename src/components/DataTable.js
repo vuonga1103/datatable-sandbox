@@ -31,49 +31,56 @@ const Styles = styled.div`
   }
 `
 
-function Table({ columns, data }) {
-  // Use the state and functions returned from useTable to build your UI
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({
-      columns,
-      data,
-    })
-
-  // Render the UI for your table
-  return (
-    <table {...getTableProps()}>
-      <thead>
-        {headerGroups.map(headerGroup => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map(column => (
-              <th {...column.getHeaderProps()}>{column.render('Header')}</th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody {...getTableBodyProps()}>
-        {rows.map((row, i) => {
-          prepareRow(row)
-          return (
-            <tr {...row.getRowProps()}>
-              {row.cells.map(cell => {
-                return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-              })}
-            </tr>
-          )
-        })}
-      </tbody>
-    </table>
-  )
+const DEFAULT_PAGINATION_CONFIG = {
+  pageSize: 50,
+  hasJumpToPage: false,
+  hasRowsPerPage: false,
+  align: 'right',
+  wrapperStyle: {},
 }
 
-const DataTable = ({ colConfig, data }) => {
+const DataTable = ({
+  colConfig,
+  data,
+  isPaginated = false,
+  paginationConfig = DEFAULT_PAGINATION_CONFIG,
+}) => {
   const memoizedColumns = React.useMemo(() => colConfig, [colConfig])
   const memoizedData = React.useMemo(() => data, [data])
 
+  const tableInstance = useTable({
+    columns: memoizedColumns,
+    data: memoizedData,
+  })
+
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    tableInstance
+
   return (
     <Styles>
-      <Table columns={memoizedColumns} data={memoizedData} />
+      <table {...getTableProps()}>
+        <thead>
+          {headerGroups.map(headerGroup => (
+            <tr {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map(column => (
+                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+        <tbody {...getTableBodyProps()}>
+          {rows.map((row, i) => {
+            prepareRow(row)
+            return (
+              <tr {...row.getRowProps()}>
+                {row.cells.map(cell => {
+                  return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                })}
+              </tr>
+            )
+          })}
+        </tbody>
+      </table>
     </Styles>
   )
 }
