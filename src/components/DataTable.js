@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useTable } from 'react-table'
+import { usePagination, useTable } from 'react-table'
+import Pagination from './Pagination'
 
 const Styles = styled.div`
   padding: 1rem;
@@ -48,13 +49,34 @@ const DataTable = ({
   const memoizedColumns = React.useMemo(() => colConfig, [colConfig])
   const memoizedData = React.useMemo(() => data, [data])
 
-  const tableInstance = useTable({
-    columns: memoizedColumns,
-    data: memoizedData,
-  })
+  const tableInstance = useTable(
+    {
+      columns: memoizedColumns,
+      data: memoizedData,
+      initialState: { pageIndex: 0, pageSize: paginationConfig.pageSize },
+    },
+    usePagination
+  )
 
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    tableInstance
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+    page, // rows for the active page
+  } = tableInstance
+
+  const renderRows = (row, i) => {
+    prepareRow(row)
+    return (
+      <tr {...row.getRowProps()}>
+        {row.cells.map(cell => {
+          return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+        })}
+      </tr>
+    )
+  }
 
   return (
     <Styles>
@@ -69,18 +91,11 @@ const DataTable = ({
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {rows.map((row, i) => {
-            prepareRow(row)
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map(cell => {
-                  return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                })}
-              </tr>
-            )
-          })}
+          {isPaginated ? page.map(renderRows) : rows.map(renderRows)}
         </tbody>
       </table>
+
+      <Pagination tableInstance={tableInstance} />
     </Styles>
   )
 }
