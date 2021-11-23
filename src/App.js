@@ -22,8 +22,22 @@ const COL_CONFIG = [
   },
 ]
 
+const PAGINATION_CONFIG = {
+  pageSize: 20,
+  hasJumpToPage: true,
+  hasRowsPerPage: true,
+  wrapperStyle: {},
+}
+
 function App() {
-  return <DataTable colConfig={COL_CONFIG} data={mockData} isPaginated />
+  return (
+    <DataTable
+      colConfig={COL_CONFIG}
+      data={mockData}
+      isPaginated
+      paginationConfig={PAGINATION_CONFIG}
+    />
+  )
 }
 
 export default App

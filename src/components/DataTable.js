@@ -36,7 +36,6 @@ const DEFAULT_PAGINATION_CONFIG = {
   pageSize: 50,
   hasJumpToPage: false,
   hasRowsPerPage: false,
-  align: 'right',
   wrapperStyle: {},
 }
 
@@ -95,7 +94,10 @@ const DataTable = ({
         </tbody>
       </table>
 
-      <Pagination tableInstance={tableInstance} />
+      <Pagination
+        tableInstance={tableInstance}
+        paginationConfig={paginationConfig}
+      />
     </Styles>
   )
 }
