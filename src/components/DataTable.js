@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useTable } from 'react-table'
+import { useTable, useGlobalFilter } from 'react-table'
+import GlobalFilter from './GlobalFilter'
 
 const Styles = styled.div`
   padding: 1rem;
@@ -31,51 +32,59 @@ const Styles = styled.div`
   }
 `
 
-function Table({ columns, data }) {
-  // Use the state and functions returned from useTable to build your UI
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({
-      columns,
-      data,
-    })
-
-  // Render the UI for your table
-  return (
-    <table {...getTableProps()}>
-      <thead>
-        {headerGroups.map(headerGroup => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map(column => (
-              <th {...column.getHeaderProps()}>{column.render('Header')}</th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody {...getTableBodyProps()}>
-        {rows.map((row, i) => {
-          prepareRow(row)
-          return (
-            <tr {...row.getRowProps()}>
-              {row.cells.map(cell => {
-                return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-              })}
-            </tr>
-          )
-        })}
-      </tbody>
-    </table>
-  )
-}
-
-const DataTable = ({ colConfig, data }) => {
+const DataTable = ({ colConfig, data, hasGlobalFilter }) => {
   const memoizedColumns = React.useMemo(() => colConfig, [colConfig])
   const memoizedData = React.useMemo(() => data, [data])
 
+  const tableInstance = useTable(
+    {
+      columns: memoizedColumns,
+      data: memoizedData,
+    },
+    useGlobalFilter
+  )
+
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+    state,
+    setGlobalFilter,
+  } = tableInstance
+
+  const { globalFilter } = state
+
   return (
     <Styles>
-      <Table columns={memoizedColumns} data={memoizedData} />
+      {hasGlobalFilter ? (
+        <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
+      ) : null}
+      <table {...getTableProps()}>
+        <thead>
+          {headerGroups.map(headerGroup => (
+            <tr {...headerGroup.getHeaderGroupProps()}>
+              {headerGroup.headers.map(column => (
+                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+              ))}
+            </tr>
+          ))}
+        </thead>
+        <tbody {...getTableBodyProps()}>
+          {rows.map((row, i) => {
+            prepareRow(row)
+            return (
+              <tr {...row.getRowProps()}>
+                {row.cells.map(cell => {
+                  return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+                })}
+              </tr>
+            )
+          })}
+        </tbody>
+      </table>
     </Styles>
   )
 }
-
 export default DataTable
