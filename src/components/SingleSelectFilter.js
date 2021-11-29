@@ -10,20 +10,6 @@ const SingleSelectColFilter = ({
 }) => {
   // Calculate the options for filtering
   // using the preFilteredRows
-  //   const options = useMemo(() => {
-  //     const options = new Set()
-  //     preFilteredRows.forEach(row => {
-  //       options.add(row.values[id])
-  //     })
-
-  //     const formattedOptions = [...options].map(option => ({
-  //       value: option,
-  //       label: option,
-  //     }))
-
-  //     return formattedOptions
-  //   }, [id, preFilteredRows])
-
   const formattedOptions = useMemo(
     () => getFormattedSelectOptions(id, preFilteredRows),
     [id, preFilteredRows]

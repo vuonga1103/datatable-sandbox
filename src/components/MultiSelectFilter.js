@@ -11,9 +11,7 @@ export const multiSelectFilterFn = (rows, columnIds, filterValues) => {
   return hasSelectedValues ? rows.filter(filterRowFn) : rows
 }
 
-const MultiSelectFilter = ({
-  column: { filterValue, setFilter, preFilteredRows, id },
-}) => {
+const MultiSelectFilter = ({ column: { setFilter, preFilteredRows, id } }) => {
   // Calculate the options for filtering
   // using the preFilteredRows
   const formattedOptions = useMemo(
