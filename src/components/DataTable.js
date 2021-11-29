@@ -32,7 +32,18 @@ const Styles = styled.div`
   }
 `
 
-const DataTable = ({ colConfig, data, hasGlobalFilter }) => {
+export const DEFAULT_GLOBAL_FILTER_CONFIG = {
+  label: 'Search all columns: ',
+  placeholder: 'Search...',
+  wrapperStyle: {},
+}
+
+const DataTable = ({
+  colConfig,
+  data,
+  hasGlobalFilter = false,
+  globalFilterConfig = DEFAULT_GLOBAL_FILTER_CONFIG,
+}) => {
   const memoizedColumns = React.useMemo(() => colConfig, [colConfig])
   const memoizedData = React.useMemo(() => data, [data])
 
@@ -59,7 +70,11 @@ const DataTable = ({ colConfig, data, hasGlobalFilter }) => {
   return (
     <Styles>
       {hasGlobalFilter ? (
-        <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
+        <GlobalFilter
+          filter={globalFilter}
+          setFilter={setGlobalFilter}
+          config={globalFilterConfig}
+        />
       ) : null}
       <table {...getTableProps()}>
         <thead>
