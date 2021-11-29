@@ -1,8 +1,12 @@
 import './App.css'
+import { mockData } from './mockData'
+
 import DataTable from './components/DataTable'
 import FirstNameHeader from './FirstNameHeader'
 import SingleSelectColFilter from './components/SingleSelectFilter'
-import { mockData } from './mockData'
+import MultiSelectFilter, {
+  multiSelectFilterFn,
+} from './components/MultiSelectFilter'
 
 const COL_CONFIG = [
   {
@@ -13,8 +17,9 @@ const COL_CONFIG = [
   {
     Header: 'Last Name',
     accessor: 'lastName',
-    Filter: SingleSelectColFilter,
-    disableFilters: true,
+    Filter: MultiSelectFilter,
+    filter: multiSelectFilterFn,
+    // disableFilters: true,
   },
   {
     Header: 'Email',
