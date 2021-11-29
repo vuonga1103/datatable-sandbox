@@ -4,9 +4,6 @@ import { mockData } from './mockData'
 import DataTable from './components/DataTable'
 import FirstNameHeader from './FirstNameHeader'
 import SingleSelectColFilter from './components/SingleSelectFilter'
-import MultiSelectFilter, {
-  multiSelectFilterFn,
-} from './components/MultiSelectFilter'
 import DateRangeFilter, {
   dateRangeFilterFn,
 } from './components/DateRangeFilter'
@@ -20,19 +17,16 @@ const COL_CONFIG = [
   {
     Header: 'Last Name',
     accessor: 'lastName',
-    Filter: MultiSelectFilter,
-    filter: multiSelectFilterFn,
-    // disableFilters: true,
+    Filter: SingleSelectColFilter,
   },
   {
     Header: 'Email',
     accessor: 'email',
-    Filter: SingleSelectColFilter,
+    disableFilters: true,
   },
   {
     Header: 'Favorite Animal',
     accessor: 'favoriteAnimal',
-    Filter: SingleSelectColFilter,
   },
   {
     Header: 'Birthday',

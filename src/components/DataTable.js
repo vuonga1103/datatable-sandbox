@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import styled from 'styled-components'
 import { useTable, useGlobalFilter, useFilters } from 'react-table'
 import GlobalFilter from './GlobalFilter'
+import MultiSelectFilter, { multiSelectFilterFn } from './MultiSelectFilter'
 
 const Styles = styled.div`
   padding: 1rem;
@@ -44,13 +45,20 @@ const DataTable = ({
   hasGlobalFilter = false,
   globalFilterConfig = DEFAULT_GLOBAL_FILTER_CONFIG,
 }) => {
-  const memoizedColumns = React.useMemo(() => colConfig, [colConfig])
-  const memoizedData = React.useMemo(() => data, [data])
+  const memoizedColumns = useMemo(() => colConfig, [colConfig])
+  const memoizedData = useMemo(() => data, [data])
+  const defaultColumn = useMemo(() => {
+    return {
+      Filter: MultiSelectFilter,
+      filter: multiSelectFilterFn,
+    }
+  }, [])
 
   const tableInstance = useTable(
     {
       columns: memoizedColumns,
       data: memoizedData,
+      defaultColumn,
     },
     useFilters,
     useGlobalFilter
