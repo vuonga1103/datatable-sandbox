@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useTable, useGlobalFilter } from 'react-table'
+import { useTable, useGlobalFilter, useFilters } from 'react-table'
 import GlobalFilter from './GlobalFilter'
 
 const Styles = styled.div`
@@ -52,6 +52,7 @@ const DataTable = ({
       columns: memoizedColumns,
       data: memoizedData,
     },
+    useFilters,
     useGlobalFilter
   )
 
@@ -81,7 +82,11 @@ const DataTable = ({
           {headerGroups.map(headerGroup => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map(column => (
-                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+                <th {...column.getHeaderProps()}>
+                  {column.render('Header')}
+
+                  <div>{column.canFilter ? column.render('Filter') : null}</div>
+                </th>
               ))}
             </tr>
           ))}
