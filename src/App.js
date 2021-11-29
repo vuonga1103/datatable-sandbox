@@ -7,6 +7,9 @@ import SingleSelectColFilter from './components/SingleSelectFilter'
 import MultiSelectFilter, {
   multiSelectFilterFn,
 } from './components/MultiSelectFilter'
+import DateRangeFilter, {
+  dateRangeFilterFn,
+} from './components/DateRangeFilter'
 
 const COL_CONFIG = [
   {
@@ -34,7 +37,8 @@ const COL_CONFIG = [
   {
     Header: 'Birthday',
     accessor: 'birthday',
-    Filter: SingleSelectColFilter,
+    Filter: DateRangeFilter,
+    filter: dateRangeFilterFn,
   },
 ]
 
