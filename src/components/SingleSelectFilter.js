@@ -1,26 +1,27 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import Select from 'react-select'
 
 // This is a custom filter UI for selecting
 // a unique option from a list
 
-function SingleSelectColFilter({
+const SingleSelectColFilter = ({
   column: { filterValue, setFilter, preFilteredRows, id },
-}) {
+}) => {
   // Calculate the options for filtering
   // using the preFilteredRows
-  const options = React.useMemo(() => {
+  const options = useMemo(() => {
     const options = new Set()
     preFilteredRows.forEach(row => {
       options.add(row.values[id])
     })
-    return [...options.values()]
-  }, [id, preFilteredRows])
 
-  const formattedOptions = options.map(option => ({
-    value: option,
-    label: option,
-  }))
+    const formattedOptions = [...options].map(option => ({
+      value: option,
+      label: option,
+    }))
+
+    return formattedOptions
+  }, [id, preFilteredRows])
 
   const handleChange = selectedOption => {
     if (selectedOption) setFilter(selectedOption.value || '')
@@ -33,7 +34,7 @@ function SingleSelectColFilter({
       classNamePrefix="select"
       defaultValue={filterValue}
       name="color"
-      options={formattedOptions}
+      options={options}
       isClearable
       onChange={handleChange}
     />
