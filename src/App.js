@@ -31,6 +31,11 @@ const COL_CONFIG = [
     accessor: 'favoriteAnimal',
     Filter: SingleSelectColFilter,
   },
+  {
+    Header: 'Birthday',
+    accessor: 'birthday',
+    Filter: SingleSelectColFilter,
+  },
 ]
 
 function App() {
