@@ -6,7 +6,7 @@ import { getFormattedSelectOptions } from './filter-utils'
 // a unique option from a list
 
 const SingleSelectColFilter = ({
-  column: { filterValue, setFilter, preFilteredRows, id },
+  column: { setFilter, preFilteredRows, id },
 }) => {
   // Calculate the options for filtering
   // using the preFilteredRows
@@ -24,8 +24,8 @@ const SingleSelectColFilter = ({
     <Select
       className="basic-single"
       classNamePrefix="select"
-      defaultValue={filterValue}
-      name="color"
+      defaultValue={''}
+      name="basic-single-select"
       options={formattedOptions}
       isClearable
       onChange={handleChange}

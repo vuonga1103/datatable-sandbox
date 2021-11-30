@@ -28,7 +28,7 @@ const MultiSelectFilter = ({ column: { setFilter, preFilteredRows, id } }) => {
     <Select
       defaultValue={[]}
       isMulti
-      name="colors"
+      name="basic-multi-select"
       options={formattedOptions}
       className="basic-multi-select"
       classNamePrefix="select"

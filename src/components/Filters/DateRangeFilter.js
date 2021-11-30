@@ -12,9 +12,7 @@ export const dateRangeFilterFn = (rows, columnIds, filterValue) => {
   return rows.filter(filterRowFn)
 }
 
-const DateRangeFilter = ({
-  column: { filterValue, setFilter, preFilteredRows, id },
-}) => {
+const DateRangeFilter = ({ column: { setFilter } }) => {
   const [dateRange, setDateRange] = useState({
     start: '',
     end: '',
