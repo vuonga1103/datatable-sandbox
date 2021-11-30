@@ -1,8 +1,10 @@
 import React, { useMemo } from 'react'
 import styled from 'styled-components'
 import { useTable, useGlobalFilter, useFilters } from 'react-table'
-import GlobalFilter from './GlobalFilter'
-import MultiSelectFilter, { multiSelectFilterFn } from './MultiSelectFilter'
+import GlobalFilter from './Filters/GlobalFilter'
+import MultiSelectFilter, {
+  multiSelectFilterFn,
+} from './Filters/MultiSelectFilter'
 
 const Styles = styled.div`
   padding: 1rem;

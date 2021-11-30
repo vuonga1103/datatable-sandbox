@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useAsyncDebounce } from 'react-table'
 
-import { DEFAULT_GLOBAL_FILTER_CONFIG } from './DataTable'
+import { DEFAULT_GLOBAL_FILTER_CONFIG } from '../DataTable'
 
 const GlobalFilter = ({ filter, setFilter, config }) => {
   const [value, setValue] = useState(filter)

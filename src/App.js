@@ -3,10 +3,10 @@ import { mockData } from './mockData'
 
 import DataTable from './components/DataTable'
 import FirstNameHeader from './FirstNameHeader'
-import SingleSelectColFilter from './components/SingleSelectFilter'
+import SingleSelectColFilter from './components/Filters/SingleSelectFilter'
 import DateRangeFilter, {
   dateRangeFilterFn,
-} from './components/DateRangeFilter'
+} from './components/Filters/DateRangeFilter'
 
 const COL_CONFIG = [
   {
