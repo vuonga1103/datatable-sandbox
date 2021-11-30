@@ -33,6 +33,7 @@ const COL_CONFIG = [
     accessor: 'birthday',
     Filter: DateRangeFilter,
     filter: dateRangeFilterFn,
+    Cell: ({ value }) => String(new Date(value).toLocaleDateString('en-US')),
   },
 ]
 
