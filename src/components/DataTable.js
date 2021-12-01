@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { useTable } from 'react-table'
+import { useTable, useSortBy } from 'react-table'
 
 const Styles = styled.div`
   padding: 1rem;
@@ -36,10 +36,13 @@ const DataTable = ({ colConfig, data }) => {
   const memoizedData = React.useMemo(() => data, [data])
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({
-      columns: memoizedColumns,
-      data: memoizedData,
-    })
+    useTable(
+      {
+        columns: memoizedColumns,
+        data: memoizedData,
+      },
+      useSortBy
+    )
 
   // Render the UI for your table
   return (
@@ -49,7 +52,19 @@ const DataTable = ({ colConfig, data }) => {
           {headerGroups.map(headerGroup => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map(column => (
-                <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+                // Add the sorting props to control sorting.
+                <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                  {column.render('Header')}
+
+                  {/* Add a sort direction indicator */}
+                  <span>
+                    {column.isSorted
+                      ? column.isSortedDesc
+                        ? ' 🔽'
+                        : ' 🔼'
+                      : ''}
+                  </span>
+                </th>
               ))}
             </tr>
           ))}
