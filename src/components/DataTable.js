@@ -58,6 +58,7 @@ const DataTable = ({
   hasGlobalFilter = false,
   globalFilterConfig = DEFAULT_GLOBAL_FILTER_CONFIG,
   wrapperStyle = {},
+  rowSpecificStyleConfigs = [],
 }) => {
   const memoizedColumns = useMemo(() => colConfig, [colConfig])
   const memoizedData = useMemo(() => data, [data])
@@ -106,6 +107,7 @@ const DataTable = ({
             getTableBodyProps={getTableBodyProps}
             rows={rows}
             prepareRow={prepareRow}
+            rowSpecificStyleConfigs={rowSpecificStyleConfigs}
           />
         </table>
       </Styles>

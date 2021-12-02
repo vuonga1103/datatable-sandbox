@@ -57,6 +57,16 @@ function App() {
           marginBottom: 4,
         },
       }}
+      rowSpecificStyleConfigs={[
+        {
+          fn: ({ firstName }) => firstName === 'Zonnya',
+          style: { color: 'orange' },
+        },
+        {
+          fn: ({ firstName }) => firstName === 'Lief',
+          style: { color: 'purple' },
+        },
+      ]}
     />
   )
 }
