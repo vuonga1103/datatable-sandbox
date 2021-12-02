@@ -1,35 +1,122 @@
 import React, { useMemo } from 'react'
 import styled from 'styled-components'
-import { useTable, useGlobalFilter, useFilters } from 'react-table'
+import {
+  useTable,
+  useGlobalFilter,
+  useFilters,
+  useBlockLayout,
+} from 'react-table'
+import { useSticky } from 'react-table-sticky'
+
 import GlobalFilter from './Filters/GlobalFilter'
 import MultiSelectFilter, {
   multiSelectFilterFn,
 } from './Filters/MultiSelectFilter'
 
+// const Styles = styled.div`
+//   padding: 1rem;
+
+//   table {
+//     border-spacing: 0;
+//     border: 1px solid black;
+
+//     tr {
+//       :last-child {
+//         td {
+//           border-bottom: 0;
+//         }
+//       }
+//     }
+
+//     th,
+//     td {
+//       margin: 0;
+//       padding: 0.5rem;
+//       border-bottom: 1px solid black;
+//       border-right: 1px solid black;
+
+//       :last-child {
+//         border-right: 0;
+//       }
+//     }
+//   }
+// `
 const Styles = styled.div`
   padding: 1rem;
 
-  table {
-    border-spacing: 0;
-    border: 1px solid black;
+  .table {
+    border: 1px solid #ddd;
 
-    tr {
+    .tr {
       :last-child {
-        td {
+        .td {
           border-bottom: 0;
         }
       }
     }
 
-    th,
-    td {
-      margin: 0;
-      padding: 0.5rem;
-      border-bottom: 1px solid black;
-      border-right: 1px solid black;
+    .th,
+    .td {
+      padding: 5px;
+      border-bottom: 1px solid #ddd;
+      border-right: 1px solid #ddd;
+      background-color: #fff;
+      overflow: hidden;
 
       :last-child {
         border-right: 0;
+      }
+
+      .resizer {
+        display: inline-block;
+        width: 5px;
+        height: 100%;
+        position: absolute;
+        right: 0;
+        top: 0;
+        transform: translateX(50%);
+        z-index: 1;
+
+        &.isResizing {
+          background: red;
+        }
+      }
+    }
+
+    &.sticky {
+      overflow: scroll;
+      .header,
+      .footer {
+        position: sticky;
+        z-index: 1;
+        width: fit-content;
+      }
+
+      .header {
+        top: 0;
+        box-shadow: 0px 3px 3px #ccc;
+      }
+
+      .footer {
+        bottom: 0;
+        box-shadow: 0px -3px 3px #ccc;
+      }
+
+      .body {
+        position: relative;
+        z-index: 0;
+      }
+
+      [data-sticky-td] {
+        position: sticky;
+      }
+
+      [data-sticky-last-left-td] {
+        box-shadow: 2px 0px 3px #ccc;
+      }
+
+      [data-sticky-first-right-td] {
+        box-shadow: -2px 0px 3px #ccc;
       }
     }
   }
@@ -63,7 +150,9 @@ const DataTable = ({
       defaultColumn,
     },
     useFilters,
-    useGlobalFilter
+    useGlobalFilter,
+    useBlockLayout,
+    useSticky
   )
 
   const {
@@ -79,7 +168,7 @@ const DataTable = ({
   const { globalFilter } = state
 
   return (
-    <Styles>
+    <>
       {hasGlobalFilter ? (
         <GlobalFilter
           filter={globalFilter}
@@ -87,34 +176,46 @@ const DataTable = ({
           config={globalFilterConfig}
         />
       ) : null}
-      <table {...getTableProps()}>
-        <thead>
-          {headerGroups.map(headerGroup => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map(column => (
-                <th {...column.getHeaderProps()}>
-                  {column.render('Header')}
+      <Styles>
+        <div
+          {...getTableProps()}
+          className="table sticky"
+          style={{ width: 500, height: 400 }}
+        >
+          <div className="header">
+            {headerGroups.map(headerGroup => (
+              <div {...headerGroup.getHeaderGroupProps()} className="tr">
+                {headerGroup.headers.map(column => (
+                  <div {...column.getHeaderProps()} className="th">
+                    {column.render('Header')}
 
-                  <div>{column.canFilter ? column.render('Filter') : null}</div>
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map((row, i) => {
-            prepareRow(row)
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map(cell => {
-                  return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                })}
-              </tr>
-            )
-          })}
-        </tbody>
-      </table>
-    </Styles>
+                    <div>
+                      {column.canFilter ? column.render('Filter') : null}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+          <div {...getTableBodyProps()} className="body">
+            {rows.map((row, i) => {
+              prepareRow(row)
+              return (
+                <div {...row.getRowProps()} className="tr">
+                  {row.cells.map(cell => {
+                    return (
+                      <div {...cell.getCellProps()} className="td">
+                        {cell.render('Cell')}
+                      </div>
+                    )
+                  })}
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </Styles>
+    </>
   )
 }
 export default DataTable

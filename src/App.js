@@ -13,6 +13,7 @@ const COL_CONFIG = [
     Header: FirstNameHeader,
     accessor: 'firstName',
     Filter: SingleSelectColFilter,
+    sticky: 'left',
   },
   {
     Header: 'Last Name',
