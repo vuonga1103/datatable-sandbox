@@ -6,19 +6,16 @@ import FirstNameHeader from './FirstNameHeader'
 import DateRangeFilter, {
   dateRangeFilterFn,
 } from './components/Filters/DateRangeFilter'
-import MuiMultiSelectFilter from './components/Filters/MuiMultiSelectFilter'
 
 const COL_CONFIG = [
   {
     Header: FirstNameHeader,
     accessor: 'firstName',
     sticky: 'left',
-    Filter: MuiMultiSelectFilter,
   },
   {
     Header: 'Last Name',
     accessor: 'lastName',
-    Filter: MuiMultiSelectFilter,
   },
   {
     Header: 'Email',
@@ -28,7 +25,6 @@ const COL_CONFIG = [
   {
     Header: 'Favorite Animal',
     accessor: 'favoriteAnimal',
-    Filter: MuiMultiSelectFilter,
   },
   {
     Header: 'Birthday',

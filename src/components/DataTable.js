@@ -12,7 +12,6 @@ import GlobalFilter from './Filters/GlobalFilter'
 import MultiSelectFilter, {
   multiSelectFilterFn,
 } from './Filters/MultiSelectFilter'
-import MuiMultiSelectFilter from './Filters/MuiMultiSelectFilter'
 
 // const Styles = styled.div`
 //   padding: 1rem;

@@ -33,12 +33,7 @@ const MultiSelectFilter = ({ column: { setFilter, preFilteredRows, id } }) => {
       className="basic-multi-select"
       classNamePrefix="select"
       onChange={handleChange}
-      styles={{
-        menu: provided => ({
-          ...provided,
-          zIndex: 3,
-        }),
-      }}
+      menuPortalTarget={document.querySelector('body')} // avoidance of z-index issue as this render the dropdown into <body>
     />
   )
 }
