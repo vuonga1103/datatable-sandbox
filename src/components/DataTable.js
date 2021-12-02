@@ -5,6 +5,8 @@ import GlobalFilter from './Filters/GlobalFilter'
 import MultiSelectFilter, {
   multiSelectFilterFn,
 } from './Filters/MultiSelectFilter'
+import TableHeaders from './TableHeaders'
+import TableBody from './TableBody'
 
 const Styles = styled.div`
   padding: 1rem;
@@ -88,31 +90,12 @@ const DataTable = ({
         />
       ) : null}
       <table {...getTableProps()}>
-        <thead>
-          {headerGroups.map(headerGroup => (
-            <tr {...headerGroup.getHeaderGroupProps()}>
-              {headerGroup.headers.map(column => (
-                <th {...column.getHeaderProps()}>
-                  {column.render('Header')}
-
-                  <div>{column.canFilter ? column.render('Filter') : null}</div>
-                </th>
-              ))}
-            </tr>
-          ))}
-        </thead>
-        <tbody {...getTableBodyProps()}>
-          {rows.map((row, i) => {
-            prepareRow(row)
-            return (
-              <tr {...row.getRowProps()}>
-                {row.cells.map(cell => {
-                  return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                })}
-              </tr>
-            )
-          })}
-        </tbody>
+        <TableHeaders headerGroups={headerGroups} />
+        <TableBody
+          getTableBodyProps={getTableBodyProps}
+          rows={rows}
+          prepareRow={prepareRow}
+        />
       </table>
     </Styles>
   )
