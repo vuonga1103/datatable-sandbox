@@ -13,6 +13,12 @@ const COL_CONFIG = [
     Header: FirstNameHeader,
     accessor: 'firstName',
     Filter: SingleSelectColFilter,
+    colThStyle: {
+      backgroundColor: 'yellow',
+    },
+    colTdStyle: {
+      backgroundColor: 'aquamarine',
+    },
   },
   {
     Header: 'Last Name',

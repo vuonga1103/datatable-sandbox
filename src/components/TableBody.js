@@ -8,7 +8,16 @@ const TableBody = ({ getTableBodyProps, rows, prepareRow }) => {
         return (
           <tr {...row.getRowProps()}>
             {row.cells.map(cell => {
-              return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+              const {
+                getCellProps,
+                render,
+                column: { colTdStyle },
+              } = cell
+              return (
+                <td {...getCellProps()} style={colTdStyle}>
+                  {render('Cell')}
+                </td>
+              )
             })}
           </tr>
         )
