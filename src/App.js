@@ -3,22 +3,22 @@ import { mockData } from './mockData'
 
 import DataTable from './components/DataTable'
 import FirstNameHeader from './FirstNameHeader'
-import SingleSelectColFilter from './components/Filters/SingleSelectFilter'
 import DateRangeFilter, {
   dateRangeFilterFn,
 } from './components/Filters/DateRangeFilter'
+import MuiMultiSelectFilter from './components/Filters/MuiMultiSelectFilter'
 
 const COL_CONFIG = [
   {
     Header: FirstNameHeader,
     accessor: 'firstName',
-    Filter: SingleSelectColFilter,
     sticky: 'left',
+    Filter: MuiMultiSelectFilter,
   },
   {
     Header: 'Last Name',
     accessor: 'lastName',
-    Filter: SingleSelectColFilter,
+    Filter: MuiMultiSelectFilter,
   },
   {
     Header: 'Email',
@@ -28,6 +28,7 @@ const COL_CONFIG = [
   {
     Header: 'Favorite Animal',
     accessor: 'favoriteAnimal',
+    Filter: MuiMultiSelectFilter,
   },
   {
     Header: 'Birthday',

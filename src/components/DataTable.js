@@ -12,6 +12,7 @@ import GlobalFilter from './Filters/GlobalFilter'
 import MultiSelectFilter, {
   multiSelectFilterFn,
 } from './Filters/MultiSelectFilter'
+import MuiMultiSelectFilter from './Filters/MuiMultiSelectFilter'
 
 // const Styles = styled.div`
 //   padding: 1rem;
@@ -180,7 +181,7 @@ const DataTable = ({
         <div
           {...getTableProps()}
           className="table sticky"
-          style={{ width: 500, height: 400 }}
+          style={{ width: 400, height: 600 }}
         >
           <div className="header">
             {headerGroups.map(headerGroup => (
@@ -188,7 +189,6 @@ const DataTable = ({
                 {headerGroup.headers.map(column => (
                   <div {...column.getHeaderProps()} className="th">
                     {column.render('Header')}
-
                     <div>
                       {column.canFilter ? column.render('Filter') : null}
                     </div>

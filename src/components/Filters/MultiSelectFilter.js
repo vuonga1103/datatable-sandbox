@@ -33,7 +33,12 @@ const MultiSelectFilter = ({ column: { setFilter, preFilteredRows, id } }) => {
       className="basic-multi-select"
       classNamePrefix="select"
       onChange={handleChange}
-      styles={{ border: '3px dashed palegreen' }}
+      styles={{
+        menu: provided => ({
+          ...provided,
+          zIndex: 3,
+        }),
+      }}
     />
   )
 }
