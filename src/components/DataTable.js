@@ -9,16 +9,25 @@ import TableHeaders from './TableHeaders'
 import TableBody from './TableBody'
 
 const Styles = styled.div`
-  padding: 1rem;
+  overflow: auto;
 
   table {
     border-spacing: 0;
     border: 1px solid black;
+    border-top: none;
+    width: 100%;
 
     tr {
       :last-child {
         td {
           border-bottom: 0;
+        }
+      }
+    }
+
+    thead {
+      tr:first-of-type th {
+        border-top: 1px solid black;
         }
       }
     }
@@ -48,6 +57,7 @@ const DataTable = ({
   data,
   hasGlobalFilter = false,
   globalFilterConfig = DEFAULT_GLOBAL_FILTER_CONFIG,
+  wrapperStyle = {},
 }) => {
   const memoizedColumns = useMemo(() => colConfig, [colConfig])
   const memoizedData = useMemo(() => data, [data])
@@ -81,7 +91,7 @@ const DataTable = ({
   const { globalFilter } = state
 
   return (
-    <Styles>
+    <div style={{ width: '100%', ...wrapperStyle }}>
       {hasGlobalFilter ? (
         <GlobalFilter
           filter={globalFilter}
@@ -89,15 +99,17 @@ const DataTable = ({
           config={globalFilterConfig}
         />
       ) : null}
-      <table {...getTableProps()}>
-        <TableHeaders headerGroups={headerGroups} />
-        <TableBody
-          getTableBodyProps={getTableBodyProps}
-          rows={rows}
-          prepareRow={prepareRow}
-        />
-      </table>
-    </Styles>
+      <Styles>
+        <table {...getTableProps()}>
+          <TableHeaders headerGroups={headerGroups} />
+          <TableBody
+            getTableBodyProps={getTableBodyProps}
+            rows={rows}
+            prepareRow={prepareRow}
+          />
+        </table>
+      </Styles>
+    </div>
   )
 }
 export default DataTable
