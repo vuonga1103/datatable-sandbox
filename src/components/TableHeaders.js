@@ -5,13 +5,16 @@ const TableHeaders = ({ headerGroups }) => {
     <thead>
       {headerGroups.map(headerGroup => (
         <tr {...headerGroup.getHeaderGroupProps()}>
-          {headerGroup.headers.map(column => (
-            <th {...column.getHeaderProps()}>
-              {column.render('Header')}
+          {headerGroup.headers.map(column => {
+            const { getHeaderProps, render, canFilter, colThStyle } = column
 
-              <div>{column.canFilter ? column.render('Filter') : null}</div>
-            </th>
-          ))}
+            return (
+              <th {...getHeaderProps()} style={colThStyle}>
+                {render('Header')}
+                <div>{canFilter ? render('Filter') : null}</div>
+              </th>
+            )
+          })}
         </tr>
       ))}
     </thead>
