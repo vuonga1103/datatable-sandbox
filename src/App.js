@@ -50,6 +50,7 @@ function App() {
           marginBottom: 4,
         },
       }}
+      tableStyle={{ maxHeight: 800 }}
     />
   )
 }

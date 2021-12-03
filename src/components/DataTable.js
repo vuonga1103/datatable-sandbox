@@ -99,6 +99,8 @@ const DataTable = ({
   data,
   hasGlobalFilter = false,
   globalFilterConfig = DEFAULT_GLOBAL_FILTER_CONFIG,
+  tableStyle = {},
+  wrapperStyle = {},
 }) => {
   const memoizedColumns = useMemo(() => colConfig, [colConfig])
   const memoizedData = useMemo(() => data, [data])
@@ -107,6 +109,8 @@ const DataTable = ({
       Filter: MultiSelectFilter,
       filter: multiSelectFilterFn,
       minWidth: 200,
+      width: 250,
+      maxWidth: 300,
     }
   }, [])
 
@@ -135,7 +139,7 @@ const DataTable = ({
   const { globalFilter } = state
 
   return (
-    <>
+    <div style={wrapperStyle}>
       {hasGlobalFilter ? (
         <GlobalFilter
           filter={globalFilter}
@@ -144,7 +148,7 @@ const DataTable = ({
         />
       ) : null}
       <Styles>
-        <div {...getTableProps()} className="table sticky">
+        <div {...getTableProps()} className="table sticky" style={tableStyle}>
           <TableHeaders headerGroups={headerGroups} />
           <TableBody
             getTableBodyProps={getTableBodyProps}
@@ -153,7 +157,7 @@ const DataTable = ({
           />
         </div>
       </Styles>
-    </>
+    </div>
   )
 }
 export default DataTable
