@@ -32,6 +32,7 @@ const COL_CONFIG = [
     Filter: DateRangeFilter,
     filter: dateRangeFilterFn,
     Cell: ({ value }) => String(new Date(value).toLocaleDateString('en-US')),
+    sticky: 'right',
   },
 ]
 
