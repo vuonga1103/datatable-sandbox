@@ -3,16 +3,28 @@ import React from 'react'
 import DefaultCell from './Cells/DefaultCell'
 import { cellTypes } from './Cells/cellTypes'
 
-const CellContainer = (props) => {
-  const {
-    column,
-    cell,
-  } = props
-  const { cellConfig } = column
+const CellContainer = props => {
+  const { column, cell, row } = props
+  const { cellConfig, rowSpecificStyleConfigs } = column
+
+  // check in rowSpecificStyleConfigs for possible row style to apply to cell, accumulate styles if there are multiple configs for the same cell
+  const rowSpecificStyle = rowSpecificStyleConfigs.reduce(
+    (acc, { fn, style }) => {
+      const shouldCellHaveStyle = Boolean(fn(row.original))
+      if (shouldCellHaveStyle) acc = { ...acc, ...style }
+      return acc
+    },
+    {}
+  )
 
   let activeCellConfig = cellConfig
 
-  let cellElement = <DefaultCell cellValueFormatter={column.cellValueFormatter} cellValue={cell.value} />
+  let cellElement = (
+    <DefaultCell
+      cellValueFormatter={column.cellValueFormatter}
+      cellValue={cell.value}
+    />
+  )
 
   if (activeCellConfig?.type) {
     const { type } = activeCellConfig
@@ -21,10 +33,7 @@ const CellContainer = (props) => {
 
     if (CellComponent) {
       cellElement = (
-        <CellComponent
-          cellConfig={activeCellConfig}
-          cellValue={cell.value}
-        />
+        <CellComponent cellConfig={activeCellConfig} cellValue={cell.value} />
       )
     }
   }
@@ -32,7 +41,7 @@ const CellContainer = (props) => {
   return (
     <td
       {...cell.getCellProps()}
-      style={column.style}
+      style={{ ...rowSpecificStyle, ...column.style }}
     >
       {cellElement}
     </td>

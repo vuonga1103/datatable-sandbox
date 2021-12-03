@@ -17,7 +17,7 @@ const COL_CONFIG = [
     },
   },
   {
-    Header: ({ value }) => 'First Name',
+    Header: 'First Name',
     headerStyle: { backgroundColor: 'yellow' },
     accessor: 'firstName',
     style: {
@@ -41,7 +41,22 @@ const COL_CONFIG = [
 ]
 
 function App() {
-  return <DataTable colConfig={COL_CONFIG} data={mockData} />
+  return (
+    <DataTable
+      colConfig={COL_CONFIG}
+      data={mockData}
+      rowSpecificStyleConfigs={[
+        {
+          fn: ({ firstName }) => firstName === 'Merrili',
+          style: { color: 'orange', backgroundColor: 'lightgreen' },
+        },
+        {
+          fn: ({ firstName }) => firstName === 'Selestina',
+          style: { color: 'purple' },
+        },
+      ]}
+    />
+  )
 }
 
 export default App

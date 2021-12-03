@@ -33,7 +33,7 @@ const Styles = styled.div`
   }
 `
 
-const DataTable = ({ colConfig, data }) => {
+const DataTable = ({ colConfig, data, rowSpecificStyleConfigs = [] }) => {
   const memoizedColumns = useMemo(() => colConfig, [colConfig])
   const memoizedData = useMemo(() => data, [data])
 
@@ -41,11 +41,12 @@ const DataTable = ({ colConfig, data }) => {
     return memoizedColumns.map(column => {
       const columnWithCell = {
         ...column,
+        rowSpecificStyleConfigs,
         Cell: CellContainer,
       }
       return columnWithCell
     })
-  }, [memoizedColumns])
+  }, [memoizedColumns, rowSpecificStyleConfigs])
 
   // Use the state and functions returned from useTable to build your UI
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
